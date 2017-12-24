@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Qué es la instancia Vue</title>
+</head>
+
+<body>
+    <main>
+        <h1>Qué es la instancia Vue</h1>
+        <p>Intermediario entre el DOM y la logica de la aplicacion</p>
+        <p>Cada vez que se hace un
+            <pre>new Vue()</pre> se configura y se crea una nueva instancia </p>
+        <p>Las operciones se hacen en la instancia y no en el modelo. Une la lógica de negocio y el DOM, la lógica es el diccionario
+            que se pasa cuando es instancia el objeto Vue</p>
+        <p>Cuando se hace la instancia hace un proxie de todas las propiedades y métodos del modelo accesibles desde fuera</p>
+        <p>El patrón que usa Vue es MVVM</p>
+        <p>Se pueden tener 2 instancias de Vue funcionando:</p>
+        <div id="instancia1">
+            {{mensaje}}
+            <input type="button" value="hi" v-on:click="alReves">
+        </div>
+        <div id="instancia2">{{mensaje}}</div>
+        <p>Se pueden hablar desde una a la otra y acceder a los modelos desde la 1 a la 2</p>
+        <p>Cuando montamos Vue se crean automaticamente los getter y setter del modelo, esto hace que sea reactivo. Pero desde fuera despues de montar y compilar no es reactivo. La propiedad se refleja pero no forma parte del modelo</p>
+        <h2>Ciclo de vida de la instancia Vue</h2>
+        <div>
+            <img src="https://vuejs.org/images/lifecycle.png" alt="" srcset="" width="600px" height="1520px">
+        </div>
+        <h2>Interceptamos beforeUpdate y updated en la instancia 3</h2>
+        <div id="instancia3">
+            <input type="text" name="" id="" v-model="mensaje">
+            <input type="button" value="MAYUSCULAS" v-on:click="mayusculas">
+            <input type="button" value="minusculas" v-on:click="minusculas">
+        </div>
+
+        
+    </main>
+
+    <script>
+        const instancia1 = new Vue({
+            el: '#instancia1',
+            data: {
+                mensaje: 'Mensaje instancia 1'
+            },
+            methods:{ 
+                alReves(){
+                        this.mensaje=this.mensaje.split('').reverse().join('');
+                        console.log(this.mensaje);
+                        instancia2.mensaje='Hola desde instancia1';
+                }
+            }
+        });
+
+        const instancia3 = new Vue({
+            el: '#instancia3',
+            data: {
+                mensaje: 'Mensaje instancia 3'
+            },
+            beforeUpdate(){
+                console.log('BeforeUpdate',this.mensaje);
+            },
+            updated(){
+                console.log('Updated ',this.mensaje)
+            },
+            methods:{
+                mayusculas(){
+                    this.mensaje=this.mensaje.toUpperCase();
+                    console.log('Mensaje: ',this.mensaje);
+                },
+                minusculas(){
+                    this.mensaje =this.mensaje.toLowerCase();
+                    console.log('Mensaje: ', this.mensaje);
+                }
+            }
+        });
+
+        const instancia2 = new Vue({
+                el: '#instancia2',
+                data: {
+                    mensaje: 'Mensaje instancia 2'
+                },
+                computed: {
+                    mensajeMayusculas() {
+                        this.mensaje.toUpperCase();
+                    }
+                }
+            });
+    </script>
+</body>
+
+</html>

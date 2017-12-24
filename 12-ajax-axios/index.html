@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Ajax Vue Resources</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <main>
+            <h1>Ajax Vue Resources</h1>
+            <section>
+                <p>Aunque como has podido comprobar, vue-resource es una gran solución para utilizar Ajax con Vue, la recomendación
+                    oficial es la librería Axios. En esta lección comprobarás como su API es casi idéntica. De hecho, con
+                    un pequeño truco, se puede intercambiar :)</p>
+                <img v-for="persona in personas" v-bind:src="persona.picture.thumbnail" :alt="persona.name.first">
+            </section>
+            <pre>{{$data}}</pre>
+        </main>
+    </div>
+
+    <script>
+        new Vue({
+            el: 'main',
+            //Parte en que se carga la instancia
+            mounted() {
+                console.log('Instancia de Vue montada');
+                this.cargarPersonas();
+            },
+            data: {
+                personas: []
+            },
+            methods: {
+                cargarPersonas() {
+                    axios.get('https://randomuser.me/api/?results=500')
+                        .then((response) => {
+                            console.log(response);
+                            this.personas = response.data.results;
+                        })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

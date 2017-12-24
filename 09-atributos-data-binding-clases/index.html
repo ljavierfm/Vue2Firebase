@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Atributos data-binding y clases css</title>
+    <style>
+        li {
+            cursor: pointer;
+        }
+
+        .completado {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Atributos data-binding y clases css</h1>
+        <p>Se quieren cambiar las tareas a completadas :</p>
+        <ul>
+            <!-- @click === v-on:click -->
+            <li v-for="tarea in tareas" @click="completarTarea(tarea)">
+                {{tarea.nombre}} {{tarea.completado}}
+            </li>
+        </ul>
+
+        <p>Se quiere que cuando una tarea este completada se tache a través de una clase css(.completado)</p>
+        <p>Se necesita asociar un atributo de la etiqueta a una parte del modelo. Para ello se usar v-bind:class. Hay que decirle
+            que pasar un objeto con la clase como clave y el modelo que se va a evaluar como valor. Si el modelo es true
+            hace el binding</p>
+        <!-- Necesito asociar un atributo "class" con una parte del modelo -->
+        <ul>
+            <li v-for="tarea in tareas" :class="{completado:tarea.completado}" @click="completarTarea(tarea)">
+                {{tarea.nombre}} {{tarea.completado}}
+            </li>
+        </ul>
+        <h2>Cuantas tareas completadas hay?</h2>
+        <h3>Hay {{tareasCompletadas}}</h3>
+
+        {{$data}}
+    </main>
+
+    <script>
+        const instancia1 = new Vue({
+            el: 'main',
+            data: {
+                mensaje: 'Mensaje instancia 1',
+                tareas: [{
+                        nombre: 'hacer la compra',
+                        completado: false
+                    },
+                    {
+                        nombre: 'aprender Vue y firebase',
+                        completado: false
+                    },
+                    {
+                        nombre: 'pillar la bici',
+                        completado: false
+                    }
+                ]
+            },
+            computed: {
+                tareasCompletadas() {
+                    return `${this.tareas.filter((tarea)=>tarea.completado).length} tareas completadas`;
+                }
+            },
+            methods: {
+                completarTarea(tarea) {
+                    tarea.completado = !tarea.completado;
+                    console.log('tarea completada en', tarea.completado);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Computed properties</title>
+</head>
+
+<body>
+    <main>
+        <h1>Computed properties</h1>
+        <p>Tienen su propio objeto dentro de una instancia Vue. Devuelven un valor que se va a ver reflejado en la vista</p>
+        <p>Procesan la informacion del modelo antes de ser renderizada en la vista</p>
+        <section>
+            <h2>Ejemplo sencillo</h2>
+            <p>Mensaje normal: {{mensaje}}</p>
+            <p>Mensaje al revés: {{mensajeAlreves}} </p>
+        </section>
+
+        <section>
+            <h2>Queremos mostrar solo las tareas de prioridad true</h2>
+            <p>Podemos iterar con v-if y v-for</p>
+            <ul>
+                <li v-for="tarea in tareas" v-if="tarea.prioridad">{{tarea.nombre}} - {{tarea.prioridad}}</li>
+            </ul>
+            <p>Más limpia</p>
+            <ul>
+                <li v-for="tarea in tareasPrioritarias">{{tarea.nombre}} - {{tarea.prioridad}}</li>
+            </ul>
+
+
+        </section>
+        
+        <main>
+        </main>
+
+        <script>
+            new Vue({
+                el: 'main',
+                data: {
+                    mensaje: 'Esto es un mensaje que voy poner del revés',
+                    tareas: [
+                        {
+                            nombre: 'hacer la compra',
+                            prioridad: true
+                        },
+                        {
+                            nombre: 'aprender Vue y firebase',
+                            prioridad: false
+                        },
+                        {
+                            nombre: 'pillar la bici',
+                            prioridad: true
+                        }
+                    ]
+                },
+                /*
+                la diferencia con los métodos es que los metodos se evaluan constantemente
+                las computed solo se evaluan cuando cambian las dependencias
+                en este caso si se llaman varias veces a las depencias aunque no hayan cambiado 
+                se usa una version cacheada. Con el método se reevalua el modelo.
+                */
+                computed:{
+                    mensajeAlreves(){
+                        return this.mensaje.split('').reverse().join();
+                    },
+                    tareasPrioritarias(){
+                        /*
+                        El filtro devuelve un Array
+                        compara cada elemento del array
+                        si cumple condicion lo añade al array
+                        */
+                        return this.tareas.filter((tarea)=>tarea.prioridad);
+                    }
+                }
+            });
+        </script>
+</body>
+
+</html>

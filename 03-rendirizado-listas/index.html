@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Renderizado de listas</h1>
+    <main>
+        <h2>Renderizado de un Array</h2>
+        <!-- renderizamos si el modelo es objeto o matriz -->
+        <ul> <!-- laborables tiene que hacer referencia a propiedad del modelo 
+                dia puede ser:d,day ...
+                por cada x en laborables obtiene el elemento
+        -->
+            <li v-for="dia in laborables">{{dia}}</li>
+        </ul>
+
+        <h2>Renderizado de un Array de objetos</h2>
+        <!-- Iterar sobre Array de objetos
+        
+        -->
+        <ul>
+            <!-- referencia al indice que ocupa la tarea en el Array -->
+            <!-- index SIEMPRE TIENE QUE LLAMARSE ASI -->
+            <li v-for="(tarea,index) in tareas">{{index}}. {{tarea.nombre}} - <small>{{tarea.prioridad}}</small></li>
+        </ul>
+
+        <h2>Renderizado de un objeto</h2>
+        <ul>
+            <li v-for="(value,key,index) in persona">
+                {{index}} - {{key}} : {{value}}
+            </li>
+        </ul>
+    </main>
+
+    <script>
+        new Vue({
+            el: 'main',
+            data: {
+                laborables:[
+                    'lunes',
+                    'martes',
+                    'miercoles',
+                    'jueves',
+                    'viernes'
+                ],
+                tareas:[
+                    {
+                        nombre:'hacer la compra',
+                        prioridad:'baja'
+                    },
+                    {
+                        nombre:'aprender Vue y firebase',
+                        prioridad:'alta'
+                    },
+                    {
+                        nombre:'pillar la bici',
+                        prioridad:'media'
+                    }
+                ],
+                persona:{
+                    nombre:'Javier',
+                    profesion:'help desk',
+                    ciudad:'El planu'
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

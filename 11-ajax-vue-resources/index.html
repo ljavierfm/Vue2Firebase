@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+    <title>Ajax Vue Resources</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+
+<body>
+    <main>
+<h1>Ajax Vue Resources</h1>
+        <section>
+            <p>Vue no incorpora funcionalidad especial utilizar Ajax. Para cubrir esa necesidad tienes vue-resource, una colección de métodos y bindings (basado en el Promise API) para realizar peticiones HTTP y crear recursos (asociar tareas comunes como verbos HTTP).
+            </p>
+            <img v-for="persona in personas"
+             v-bind:src="persona.picture.thumbnail"
+             :alt="persona.name.first">
+        </section>
+        <pre>{{$data}}</pre>
+    </main>
+
+    <script>
+        new Vue({
+            el: 'main',
+            //Parte en que se carga la instancia
+            mounted(){
+                console.log('Instancia de Vue montada');
+                this.cargarPersonas();
+            },
+            data:{
+                personas:[]
+            },
+            methods:{
+                cargarPersonas(){
+                    this.$http.get('https://randomuser.me/api/?results=500')
+                    .then((response)=>{
+                        console.log(response);
+                        this.personas=response.body.results;
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

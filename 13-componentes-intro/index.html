@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <script src="./js/tareas.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Introducción a componentes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+
+<body>
+    <main>
+<h1>Introducción a componentes</h1>
+        <section>
+            <h2>Inserto un componente creado por mi:</h2>
+            <p>Con "v-bind:" le decimos que lo que pongamos como valor no es una string es una expresion a evaluar dinamicamente. Mira en el modelo, en el ambito de Vue</p>
+            <mis-tareas v-bind:tareas="tareas"></mis-tareas>
+            <h2>Tareas pilladas directamente del modelo de Vue</h2>
+            <ul>
+                <li v-for="tarea in tareas">
+                    {{tarea.title}}                   
+                </li>
+            </ul>
+        </section>
+        <pre>{{$data}}</pre>
+    </main>
+
+    <script>
+        new Vue({
+            el: 'main',
+            //Parte en que se carga la instancia
+            mounted(){
+                console.log('Instancia de Vue montada');
+                this.cargarTareas();
+            },
+            data:{
+                tareas:[]
+            },
+            methods:{
+                cargarTareas(){
+                    axios.get('https://jsonplaceholder.typicode.com/todos')
+                    .then((response)=>{
+                        console.log(response);
+                        this.tareas=response.data;
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue@2.5.9/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <!-- Vue busca en data y lo introduce -->
+        <h1>{{mensaje}}</h1>
+        <!-- Directiva:
+            atributos HTML que no forma de la espec oficial pero añade propiedades
+            v-model: Asocia del valor de un modelo con una etiqueta del HTML
+        -->
+        <input type="text" v-model='mensaje'>
+        <pre>{{$data}}</pre>
+    </main>
+
+    <script>
+        
+        //Se crea la instancia de Vue
+        //Un nuevo objeto Vue
+        new Vue({
+            //Accede a lo que está dentro de <main>
+            el: 'main',
+            //modelo o fuente de datos de la instancia
+            data:{
+                mensaje:'Hola mundo'
+            }
+        });
+
+    </script>
+</body>
+
+</html>

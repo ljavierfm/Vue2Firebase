@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Transiciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <style>
+        /* Enter se añade al inicio de la anim,dura 1 frame*/
+
+        .aparecer-enter {
+            opacity: 0;
+        }
+
+        /* durante 1 sg pasa de 0 a 1 durante todo el tiempo de entrada */
+
+        .aparecer-enter-active {
+            transition: opacity 1s;
+        }
+
+        /* Ultimo estado de la transicion*/
+
+        .aparecer-leave-to {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Transiciones</h1>
+        <section>
+            <p>La etiqueta name la utiliza Vue y las clases de CSS. Prefija las clases de la animación. si no se pone nombre,
+                por defecto será "v-"
+            </p>
+            <button @click="mostrar=!mostrar">Mostrar/Ocultar</button>
+            <transition name="aparecer">
+                <h2 v-if="mostrar" v-text="mensajes.transicion"></h2>
+            </transition>
+        </section>
+
+        <section>
+            <!-- appear hace que se ejecute cuando carga la pagina -->
+            <transition name="custom-classes-transition" enter-active-class="animated tada" leave-active-class="animated bounceOutRight" appear>
+            <!-- con diferentes etiquetas hay que ponerles key -->
+                <h2 v-if="mostrar" v-text="mensajes.animacion"></h2>
+            <h3 v-else v-text="mensajes.entreElementos"></h3>
+            </transition>
+        </section>
+
+        <pre>{{$data}}</pre>
+    </main>
+
+    <script>
+        new Vue({
+            el: 'main',
+            data: {
+                mostrar: true,
+                mensajes: {
+                    transicion: 'Transiciones CSS con Vue.js',
+                    animacion: 'Animaciones CSS con Vue.js',
+                    animationCustom: 'Animaciones custom CSS con Vue.js',
+                    entreElementos: 'Transiciones entre elementos con Vue.js'
+                },
+                computed: {
+                    tareasCompletadas() {
+                        return `${this.tareas.filter((tarea) => tarea.completado).length} tareas completadas`;
+                    }
+                },
+                methods: {
+                    completarTarea(tarea) {
+                        tarea.completado = !tarea.completado;
+                        console.log('tarea completada en', tarea.completado);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

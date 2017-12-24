@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Eventos</title>
+</head>
+
+<body>
+    <h1>Eventos</h1>
+    <main>
+        <h2>Eventos con las etiquetas sueltas</h2>
+        <!-- directiva que controla eventos: v-on -->
+        <!-- hay que especificar evento con ": on, keyup,keyup.enter ..." -->
+        <input type="button" value="Enviar tarea" v-on:click="agregarTarea">
+
+        <!-- asociamos modelo al input con v-model -->
+        <input type="text" name="NuevaTarea" v-model="nuevaTarea" placeholder="Inserta tarea">
+
+        <h2>Eventos desde un formulario</h2>
+        <!-- el modificador .prevent evita el comportamiento por defecto que hace que recargue la pagina -->
+        <form v-on:submit.prevent="agregarTareaForm">
+            <!-- dentro de un form el boton de envio es submir -->
+            <!--- este recarga la pagina -->
+            <input type="text" name="NuevaTarea" v-model="nuevaTarea" placeholder="Inserta tarea">
+            <input type="submit" value="Enviar tarea">
+
+        </form>
+
+        <h2>Listado de tareas</h2>
+        <ul>
+            <li v-for="tarea in tareas">{{tarea}}</li>
+        </ul>
+    </main>
+
+    <script>
+        new Vue({
+            el: 'main',
+            data: {
+                nuevaTarea: null,
+                tareas: [
+                    'Aprender JS',
+                    'Aprender ES6',
+                    'Aprender Vue'
+                ]
+            },
+            //las funciones en Vue tienen que estar en el objeto method
+            methods: {
+                agregarTarea() {
+                    //this hace referencia a la instancia Vue
+                    this.tareas.unshift(this.nuevaTarea);
+                    this.nuevaTarea = '';
+                },
+                agregarTareaForm() {
+                    //this hace referencia a la instancia Vue
+                    this.tareas.unshift(this.nuevaTarea);
+                    this.nuevaTarea = '';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue@2.5.9/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <!-- Directiva que renderiza la etiqueta.
+            No elimina el elemento del DOM Equivalente a display:none
+        -->
+        <h1 v-show="conectado">Conectado v-show</h1>
+
+        <!-- Renderiza la etiqueta si cumple la condición 
+            Elimina el elemento del DOM. Mas demandante en recursos
+        -->
+        <h1 v-if="conexion">Conectado con v-if</h1>
+
+        <!-- Funciona igual que en Javacript
+            Se van evaluando condiciones
+        -->
+        <h1 v-if="edad <40">Menor de 40</h1>
+        <h1 v-else-if="edad>100">Mayor de 100</h1>
+        <h1 v-else>Tienes entre 40 y 99 años</h1>
+
+        <!-- Queremos que varios elementos se muestren u oculten en base a un if
+            para ello englobamos dentro de una marca que lleve el if
+        -->
+        <h2>If-else usando bloques en un template</h2>
+        <template v-if="edadMinima <18">
+            <h3>Yes muy guaje para entrar</h3>
+        </template>
+        <template v-else>
+            <h3>Ya yes mayor</h3>
+        </template>
+        <pre>{{$data}}</pre>
+
+    </main>
+
+    <script>
+        new Vue({
+            el: 'main',
+            data: {
+                conectado: false,
+                conexion: false,
+                edadMinima: 18,
+                edad: 40
+            }
+        });
+    </script>
+</body>
+
+</html>

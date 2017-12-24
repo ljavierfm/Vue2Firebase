@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Componentes: Templates</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+
+<body>
+    <main>
+        <h1>Componentes: Templates</h1>
+        <!-- queremos las personas del modelo de la instancia principal -->
+        <!-- con v-bind:listado evalua el valor de "personas" como expresion y averiguar a que vale -->
+        <elegir-ganador :listado="personas" inline-template>
+            <div>
+                <h2 v-if="ganador">El ganador es: {{ganador}} </h2>
+                <template v-else>
+                    <h2>Participantes</h2>
+                    <ul>
+                        <li v-for="persona in participantes">{{persona}}</li>
+                    </ul>
+                </template>
+                <button @click="elegirGanador">Elegir ganador</button>
+            </div>
+        </elegir-ganador>
+
+        {{$data}}
+    </main>
+    <!-- type="text/template" no es reconocido por el navegador -->
+    <!-- Pero está en el DOM y Vue si lo reconoce e interpreta -->
+    <!--<script type="text/template" id="elegir-ganador-template">
+        <div>
+            <h2 v-if="ganador">El ganador es: {{ganador}} </h2>
+            <template v-else>
+                <h2>Participantes</h2>
+                <ul>
+                    <li v-for="persona in participantes">{{persona}}</li>
+                </ul>
+            </template>
+            <button @click="elegirGanador">Elegir ganador</button>
+        </div>
+    </script>-->
+    <!--
+    <template id="elegir-ganador-template">
+        <div>
+            <h2 v-if="ganador">El ganador es: {{ganador}} </h2>
+            <template v-else>
+                <h2>Participantes</h2>
+                <ul>
+                    <li v-for="persona in participantes">{{persona}}</li>
+                </ul>
+            </template>
+            <button @click="elegirGanador">Elegir ganador</button>
+        </div>
+    </template>
+-->
+    <script src="./js/main.js"></script>
+</body>
+
+</html>

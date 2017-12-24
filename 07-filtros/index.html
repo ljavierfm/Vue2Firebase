@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/vue.js"></script>
+    <title>Filtros</title>
+</head>
+
+<body>
+    <main>
+        <h1>Filtros</h1>
+        <p>Queremos filtrar los juegos que tienen un nota minima</p>
+        <ul>
+            <li for v-for="juego in mejoresJuegos">
+                {{juego.titulo}}
+                 {{juego.genero}}
+                 {{juego.puntuacion}}
+            </li>
+        </ul>
+        <input type="range" min="0" max="10" v-model="puntuacionMinima">
+        <section>
+            <h2>Buscamos un juego</h2>
+            <input type="search" v-model="busqueda" placeholder="Buscar juego">
+            <ul>
+                <li v-for="juego in buscarJuego">
+                     {{juego.titulo}} {{juego.genero}} {{juego.puntuacion}}
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Un texto aplicado con un Vue filter</h2>
+            {{juegos[0].titulo | reverso}}
+        </section>
+        <pre>{{$data}}</pre>
+    </main>
+
+    <script>
+        //Los filtros se definen antes de la instancia Vue
+        Vue.filter('reverso',(valor)=>valor.split('').reverse().join(''));
+        //se pueden cargar librerias de utilizadades para crear filtros custom
+
+        new Vue({
+            el: 'main',
+            data: {
+                busqueda:'',
+                puntuacionMinima:9,
+                juegos: [{
+                        titulo: 'Monkey Island',
+                        genero: 'Aventura gráfica',
+                        puntuacion: 10
+                    },
+                    {
+                        titulo: 'Monkey Island 4',
+                        genero: 'Aventura gráfica',
+                        puntuacion: 2
+                    },
+                    {
+                        titulo: 'Halo',
+                        genero: 'First person shooter',
+                        puntuacion: 9
+                    },
+                    {
+                        titulo: 'Uncharted',
+                        genero: 'Aventuras',
+                        puntuacion: 8
+                    }
+                ]
+            },
+            /*
+            la diferencia con los métodos es que los metodos se evaluan constantemente
+            las computed solo se evaluan cuando cambian las dependencias
+            en este caso si se llaman varias veces a las depencias aunque no hayan cambiado 
+            se usa una version cacheada. Con el método se reevalua el modelo.
+            */
+            computed: {
+                mejoresJuegos(){
+                    return this.juegos.filter((juego)=>juego.puntuacion>=this.puntuacionMinima);
+                },
+                buscarJuego(){
+                   return this.juegos.filter((juego)=>juego.titulo.includes(this.busqueda));
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
