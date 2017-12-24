@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Componentes: Slots</title>
+</head>
+
+<body>
+<main>
+    <h1>Componentes: Slots</h1>
+    <p>Otra forma de pasar información a los componentes. Permiten configurar la parte más visual de los componentes</p>
+    <p>Template base con partes dinámicas personalizadas</p>
+    <p>Solo puede haber un slot anónimo. Se tienen que nombrar</p>
+    <alerta tipo="alerta--error" posicion="alerta--arriba-izquierda">
+        <!-- esto lo va a meter en el slot del template. Se mete en template paa que no meta <p> -->
+        <template slot="header">Error</template>
+        <template>Este es contenido de alerta de error. Algo has tocado</template>
+        <template slot="footer">Revisar tus últimos pasos</template>
+    </alerta>
+
+    <alerta tipo="alerta--advertencia" posicion="alerta--arriba-derecha">
+        <!-- esto lo va a meter en el slot del template. Se mete en template paa que no meta <p> -->
+        <template slot="header">Cuidadín</template>
+        <template>Este es el nuevo contenido de la alerta de advertencia.</template>
+        <template slot="footer">Puedes continuar con cuidado</template>
+    </alerta>
+
+    <alerta tipo="alerta--exito" posicion="alerta--abajo-izquierda">
+        <!-- esto lo va a meter en el slot del template. Se mete en template paa que no meta <p> -->
+        <template slot="header">Todo Ok</template>
+        <template>Este es el nuevo contenido de la alerta.</template>
+        <template slot="footer">Puedes continuar con normalidad</template>
+    </alerta>
+
+    <pre>{{$data}}</pre>
+</main>
+<template id="alerta-template">
+    <!-- :class atributo de clase dinamico -->
+    <section class="alerta" :class="[tipo,posicion]">
+        <header class="alerta__header">
+            <slot name="header">
+                Hi
+            </slot>
+        </header>
+        <div class="alerta__contenido">
+            <!-- punto del template que se puede asignar propio contenido-->
+            <slot>
+                Lorem ipsum dolor sit ament, consectetur adipiscing elit.
+            </slot>
+
+        </div>
+        <footer class="alerta__footer">
+            <slot name="footer">
+                Footer
+            </slot>
+        </footer>
+    </section>
+</template>
+<script src="./js/vue.js"></script>
+<script src="./js/main.js"></script>
+</body>
+
+</html>

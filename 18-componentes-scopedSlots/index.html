@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Componentes: Scoped slots</title>
+</head>
+
+<body>
+<main>
+    <h1>Componentes: Scoped slots</h1>
+    <p>Permiten hacer referencia a la fuente de datos.</p>
+    <mis-tareas :listado="tareas">
+        <template slot-scope="datos">
+            <!-- titulo, mismo nombre que defino en el slot -->
+            <li>{{datos.titulazo}}</li>
+        </template>
+    </mis-tareas>
+
+    <pre>{{$data}}</pre>
+</main>
+<!-- el template es ajeno a como representar la fuente de datos del componente -->
+<template id="mis-tareas-template">
+    <section>
+        <ul>
+            <!-- :titulo propiedad dinámica -->
+            <!-- no sabemos que vamos a representar -->
+            <slot v-for="tarea in listado" :titulazo="tarea.titulo"></slot>
+        </ul>
+    </section>
+</template>
+<script src="./js/vue.js"></script>
+<script src="./js/main.js"></script>
+</body>
+
+</html>
